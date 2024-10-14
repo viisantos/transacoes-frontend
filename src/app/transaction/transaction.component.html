@@ -1,0 +1,61 @@
+<div class="container">
+  <br>
+  <div class="secular-one-regular"><h2>Lista de transações</h2></div>
+  <div style="flex-direction: row; display:flex;">
+    <div style="float:left;"><button class="btn btn-info" routerLink="/criartransacao">Adicionar Transação</button></div>
+    <div style="margin-left:65%;">
+      <select id="filtro" class="form-control col" style="width:100%;" #options (change)="filterTransactions(options.value)">
+        <option value="Todas">Todas</option>
+        <option value="Entrada">Entrada</option>
+        <option value="Saída">Saída</option>
+      </select>
+    </div>
+  </div>
+
+  <br>
+  <div *ngIf="status && isVisible" class="alert alert-success">
+  <button (click)="closeDiv()" class="close-btn" style="position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(255, 0, 0, 0);
+  width: 10px;
+  height:10px;
+  color: black;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 100%;">X</button>
+    {{ status }}
+  </div>
+  <br>
+
+  <table class="table table-striped" id="tableTransactions">
+    <thead>
+      <tr>
+        <th>Tipo</th>
+        <th>Descrição</th>
+        <th style="cursor:pointer;" (click)="sort_value(reverse_value)">Valor <span>{{reverse_value ? '▲' : '▼'}}</span></th>
+        <th style="cursor:pointer;" (click)="sort_date(reverse_date)">Data <span>{{reverse_date ? '▲' : '▼'}}</span></th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let transaction of filtered_Transactions" >
+        <td> {{ transaction.transaction_type }}</td>
+        <td> {{ transaction.transaction_description }}</td>
+        <td> {{ transaction.transaction_value | number: '.2' }}</td>
+        <td> {{ transaction.transaction_date | date: 'dd-MM-yyyy' }}</td>
+        <td>
+          <button class="btn btn-secondary" routerLink="/transacoes/edit/{{ transaction.id }}"> Editar </button>
+          &nbsp;&nbsp;
+          <button class="btn btn-danger" (click)="deleteTransaction(transaction.id)"> Deletar </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<script>
+  function sortByDate(){
+    $('#tableTransactions').DataTable( { order:[4, 'desc'] } );
+  }
+</script>

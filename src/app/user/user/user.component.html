@@ -1,0 +1,19 @@
+<div class="container">
+  <br>
+  <h2 class="secular-one-regular">Lista de usuários</h2>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td> {{ user.id }}</td>
+        <td> {{ user.email }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
